@@ -1,0 +1,97 @@
+﻿@model IEnumerable<DB_Programming_Class_III.Models.Customer>
+
+@{
+    ViewBag.Title = "Customers";
+}
+
+<link rel="stylesheet" href="~/Content/main.css" />
+
+<div class="row">
+    <div class="top-buffer col-md-12">
+        <h2>Customers</h2>
+        <p>Total Customers: @ViewBag.totalCustomers</p>
+    </div>
+</div>
+@using (Html.BeginForm("Index", "Customers", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @*@Html.TextBox("searchTerm")*@
+            <input type="text" placeholder="Search by Name or City..." name="searchTerm" id="searchTerm" />
+            <input type="submit" class="btn btn-primary btn-xs" value="Search" />
+            <a href="@Url.Action("Index",  "Customers")" class="btn btn-default btn-xs">Clear Search</a>
+            @*<input type="reset" class="btn btn-default btn-xs" value="Clear Search" />*@
+        </div>
+    </div>
+}
+<br />
+<p>
+    <a href="@Url.Action("Create", "Customers")" class="btn btn-default btn-xs">
+        Create Customer
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
+</p>
+
+<table id="customers" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(c => c.Name)</th>
+            <th>@Html.DisplayNameFor(c => c.Address)</th>
+            <th>@Html.DisplayNameFor(c => c.City)</th>
+            <th>@Html.DisplayNameFor(c => c.State1.StateCode)</th>
+            <th>@Html.DisplayNameFor(c => c.ZipCode)</th>
+            <th>@Html.DisplayNameFor(c => c.Phone)</th>
+            <th>@Html.DisplayNameFor(c => c.Email)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(c => customer.Name)</td>
+                <td>@Html.DisplayFor(c => customer.Address)</td>
+                <td>@Html.DisplayFor(c => customer.City)</td>
+                <td>@Html.DisplayFor(c => customer.State1.StateCode)</td>
+                <td>@Html.DisplayFor(c => customer.ZipCode)</td>
+                <td>@Html.DisplayFor(c => customer.Phone)</td>
+                <td>@Html.DisplayFor(c => customer.Email)</td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = customer.CustomerID }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Edit Customer" })
+                    @*@Html.ActionLink("Details", "Details", new { id = customer.CustomerID }) |*@
+                    @Html.ActionLink(" ", "Delete", new { id = customer.CustomerID }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash", @title = "Delete Customer" })
+                    @*@Html.ActionLink(" ", "Delete", new { id = customer.CustomerID }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash", onclick = "return confirm('Are you sure you want to remove " + customer.Name + " to list ?');" })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm">
+    </ul>
+</nav>
+<script>
+    window.addEventListener('load', function () {
+         var page = parseInt('@ViewBag.page');
+         var top = parseInt('@ViewBag.top');
+         var totalCustomers = parseInt('@ViewBag.totalCustomers');
+
+         var _HTMLPaging = [];
+         var i = 0;
+         var pages = parseInt(totalCustomers / top);
+         if (totalCustomers % top != 0) {
+            pages++;
+         }
+
+        for (i = 0; i < pages; i++) {
+            var activeClass = '';
+            if (page == (i + 1)) {
+            activeClass = 'active';
+        }
+
+         _HTMLPaging.push('<li class="page-item' + activeClass +'"><a class="page-link" href="/Customers/Index?top=' + top + '&page=' + (i + 1).toString() + '">' + (i + 1).toString() + '</a ></li > ');
+        }
+        $(".pagination").html(_HTMLPaging.join(''));
+    });
+</script>

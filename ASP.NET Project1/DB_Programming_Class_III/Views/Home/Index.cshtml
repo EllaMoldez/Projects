@@ -1,0 +1,129 @@
+﻿@model IEnumerable<DB_Programming_Class_III.Models.Incident>
+
+@{
+    ViewBag.Title = "Incidents";
+}
+
+<link rel="stylesheet" href="~/Content/main.css" />
+
+<div class="row">
+    <div class="top-buffer col-md-12">
+        <h2>Incidents</h2>
+        <p>Total Incidents: @ViewBag.totalIncidents</p>
+    </div>
+</div>
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <input type="text" placeholder="Search by Title, Customer Name and Product Code" name="searchTerm" id="searchTerm" />
+            <input type="submit" class="btn btn-primary btn-xs" value="Search" />
+            <a href="@Url.Action("Index",  "Home")" class="btn btn-default btn-xs">Clear Search</a>
+        </div>
+    </div>
+    @*<div class="row">
+        <div class="col-md-12">
+            <label>Open Incidents</label>
+            <input type="checkbox" name="cbOpen" class="incidentStatus" checked="checked" onclick="changeStatus()" />
+            <label>Closed Incidents</label>
+            <input type="checkbox" name="cbClose" class="incidentStatus" checked="checked" onclick="changeStatus" />
+        </div>
+    </div>*@
+}
+
+<br />
+<p id="total">
+    <a href="@Url.Action("Create", "Home")" class="btn btn-default btn-xs">
+        Create Incident
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
+</p>
+
+<table id="incident" class="table table-bordered top-buffer">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(i => i.IncidentID)</th>
+            <th>@Html.DisplayNameFor(i => i.DateOpened)</th>
+            <th>@Html.DisplayNameFor(i => i.Title)</th>
+            <th>@Html.DisplayNameFor(i => i.Product.ProductCode)</th>
+            <th>@Html.DisplayNameFor(i => i.Customer.Name)</th>
+            <th>@Html.DisplayNameFor(i => i.Technician.Name)</th>
+            <th>@Html.DisplayNameFor(i => i.DateClosed)</th>
+
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var incident in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(i => incident.IncidentID)</td>
+                <td>@incident.DateOpened.ToShortDateString()</td>
+                <td>@Html.DisplayFor(i => incident.Title)</td>
+                <td>
+                    <a href="~/Products/Details/@incident.ProductCode" class="nounderline">
+                        @incident.Product.ProductCode
+                    </a>
+                </td>
+                <td>
+                    <a href="/Customers/Details/@incident.CustomerID" class="nounderline">
+                        @incident.Customer.Name
+                    </a>
+                </td>
+                <td>@Html.DisplayFor(i => incident.Technician.Name)</td>
+                @if (incident.DateClosed.HasValue)
+                {
+                    <td>@incident.DateClosed.Value.ToShortDateString()</td>
+
+                }
+                else
+                {
+                    <td></td>
+                }
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = incident.IncidentID }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Edit Incident" })
+                    @Html.ActionLink(" ", "Delete", new { id = incident.IncidentID }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash", @title = "Delete Incident" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*Paging*@
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm">
+    </ul>
+</nav>
+
+@*
+    1. mark which page is Active
+    2. mark which button is disabled (previous/next)
+    3. determine how many pages we have in total
+*@
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalIncidents = parseInt('@ViewBag.totalIncidents');
+
+        var _HTMLPaging = [];
+        var i = 0;
+        var pages = parseInt(totalIncidents / top);
+        if (totalIncidents % top != 0) {
+            pages++;
+        }
+        for (i = 0; i < pages; i++) {
+
+            var activeClass = '';
+            if (page == (i + 1)) {
+                activeClass = 'active';
+            }
+
+            _HTMLPaging.push('<li class="page-item' + activeClass +'"><a class="page-link" href="/Home/Index?top=' + top + '&page=' + (i + 1).toString() + '">' + (i + 1).toString() + '</a ></li > ');
+        }
+        $(".pagination").html(_HTMLPaging.join(''));
+    });
+</script>

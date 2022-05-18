@@ -1,0 +1,29 @@
+﻿@model DB_Programming_Class_III.Models.Technician
+
+@{
+    ViewBag.Title = "Delete Technician";
+}
+<br />
+<h2>Delete Technician</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(t => t.Name)</dt>
+        <dd>@Html.DisplayFor(t => t.Name)</dd>
+        <dt>@Html.DisplayNameFor(t => t.Email)</dt>
+        <dd>@Html.DisplayFor(t => t.Email)</dd>
+        <dt>@Html.DisplayNameFor(t => t.Phone)</dt>
+        <dd>@Html.DisplayFor(t => t.Phone)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

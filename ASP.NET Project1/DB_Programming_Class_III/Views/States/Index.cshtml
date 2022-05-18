@@ -1,0 +1,120 @@
+﻿@model IEnumerable<DB_Programming_Class_III.Models.State>
+
+@{
+    ViewBag.Title = "States";
+}
+
+<link rel="stylesheet" href="~/Content/main.css" />
+@*<script src="~/Content/main.js"></script>*@
+
+<div class="row">
+    <div class="top-buffer col-md-12">
+        <h2>States</h2>
+        <p>Total States: @ViewBag.totalStates</p>
+    </div>
+</div>
+
+@using (Html.BeginForm("Index", "States", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @*@Html.TextBox("searchTerm")*@
+            <input type="text" placeholder="Search by State Code or Name..." name="searchTerm" id="searchTerm" />
+            <input type="submit" class="btn btn-primary btn-xs" value="Search" />
+            <a href="@Url.Action("Index",  "States")" class="btn btn-default btn-xs">Clear Search</a>
+            @*<input type="reset" class="btn btn-default btn-xs" value="Clear Search" />*@
+        </div>
+    </div>
+}
+<br />
+<p>
+    <a href="@Url.Action("Create", "States")" class="btn btn-default btn-xs">
+        Create State
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
+</p>
+
+<table id="state" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(s => s.StateCode)</th>
+            <th>@Html.DisplayNameFor(s => s.StateName)</th>
+            <th>@Html.DisplayNameFor(s => s.FirstZipCode)</th>
+            <th>@Html.DisplayNameFor(s => s.LastZipCode)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var state in Model)
+        {
+            <tr>
+                <td onclick="stateDetails('@state.StateCode');" scope="row" data-target="#stateDetails" data-toggle="modal" data-url="@Url.Action("Delete")">
+                    @state.StateCode
+                </td>
+                <td>@Html.DisplayFor(s => state.StateName)</td>
+                <td>@Html.DisplayFor(s => state.FirstZipCode)</td>
+                <td>@Html.DisplayFor(s => state.LastZipCode)</td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = state.StateCode }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Edit State" })
+                    @*@Html.ActionLink("Details", "Details", new { id = item.StateCode }) |*@
+                    @Html.ActionLink(" ", "Delete", new { id = state.StateCode }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash", @title = "Delete State"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm">
+    </ul>
+</nav>
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalStates = parseInt('@ViewBag.totalStates');
+
+        var _HTMLPaging = [];
+        var i = 0;
+        var pages = parseInt(totalStates / top);
+        if (totalStates % top != 0) {
+            pages++;
+        }
+        for (i = 0; i < pages; i++) {
+
+            var activeClass = '';
+            if (page == (i + 1)) {
+                activeClass = 'active';
+            }
+
+            _HTMLPaging.push('<li class="page-item' + activeClass +'"><a class="page-link" href="/States/Index?top=' + top + '&page=' + (i + 1).toString() + '">' + (i + 1).toString() + '</a ></li > ');
+        }
+        $(".pagination").html(_HTMLPaging.join(''));
+    });
+</script>
+
+
+<!-- Modal -->
+<!--<div class="modal fade" id="stateDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="exampleModalLabel">State Details</h3>
+            </div>
+            <div class="modal-body">
+                <form action="Details">
+                </form>
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Save Changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>-->

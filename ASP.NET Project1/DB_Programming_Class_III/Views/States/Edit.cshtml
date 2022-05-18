@@ -1,0 +1,49 @@
+﻿@model DB_Programming_Class_III.Models.State
+
+@{
+    ViewBag.Title = "Edit State";
+}
+<br />
+<h2>Edit State</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(s => s.StateCode)
+
+        <div class="form-group">
+            @Html.LabelFor(s => s.StateName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(s => s.StateName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(s => s.StateName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(s => s.FirstZipCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(s => s.FirstZipCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(s => s.FirstZipCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(s => s.LastZipCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(s => s.LastZipCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(s => s.LastZipCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}

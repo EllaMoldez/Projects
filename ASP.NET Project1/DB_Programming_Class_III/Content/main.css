@@ -1,0 +1,106 @@
+﻿body {
+    background-image: url('../images/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#searchTerm {
+    width: 20%;
+    box-sizing: border-box;
+    font-size: 12px !important;
+}
+p {
+    font-size: 12px !important;
+    font-weight: bold;
+}
+
+hr {
+    position: relative;
+    border: none;
+    height: 2px;
+    background: #696969;
+}
+
+#address {
+    font-size: 12px !important;
+}
+
+#products, #customers #incident #technician #state {
+    /* font-family: Arial, Helvetica, sans-serif;*/
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    #products td, #customers td, #incident td, #technician td, #state td {
+        border: 1px solid #ddd;
+        padding: 3px;
+        font-size: 12px !important;
+    }
+
+    #products th, #customers th, #incident th, #technician th, #state th {
+        border: 1px solid #ddd;
+        /*padding: 8px;*/
+        font-size: 10px !important;
+        text-transform: uppercase;
+        font-weight: normal;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        /* background-color: #2c3e50;*/
+        background-color: #26A69A;
+        color: white;
+    }
+
+.top-buffer {
+    margin-top: 20px;
+}
+
+#products tr:nth-child(even), #customers tr:nth-child(even), #incident tr:nth-child(even), #technician tr:nth-child(even), #state tr:nth-child(even) {
+    background-color: #F0F0F0;
+}
+
+#products tr:hover, #customers tr:hover, #incident tr:hover, #technician tr:hover, #state tr:hover {
+    background-color: #dbfff8;
+}
+
+/*#products th, #customers th, #incident th, #technician th, #state th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #2c3e50;
+    color: white;
+}*/
+
+#products td {
+    cursor: pointer;
+}
+
+/*.plus-icon:after {
+    content: "\f067";
+    font-family: 'FontAwesome';
+    padding-left: 5px;
+}*/
+
+label {
+    display: block;
+    width: 500px;
+}
+
+.nounderline {
+    text-decoration: none !important
+}
+
+td {
+    vertical-align: middle;
+}
+
+footer {
+    font-size: 12px !important;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #2c3e50;
+    color: #fff;
+}

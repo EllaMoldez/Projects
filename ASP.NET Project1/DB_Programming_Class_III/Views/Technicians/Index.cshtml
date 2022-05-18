@@ -1,0 +1,92 @@
+﻿@model IEnumerable<DB_Programming_Class_III.Models.Technician>
+
+@{
+    ViewBag.Title = "Technicians";
+}
+
+<link rel="stylesheet" href="~/Content/main.css" />
+
+<div class="row">
+    <div class="top-buffer col-md-12">
+        <h2>Technicians</h2>
+        <p>Total Technicians: @ViewBag.totalTechnicians</p>
+    </div>
+</div>
+
+@using (Html.BeginForm("Index", "Technicians", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @*@Html.TextBox("searchTerm")*@
+            <input type="text" placeholder="Search by Name..." name="searchTerm" id="searchTerm" />
+            <input type="submit" class="btn btn-primary btn-xs" value="Search" />
+            <a href="@Url.Action("Index",  "Technicians")" class="btn btn-default btn-xs">Clear Search</a>
+            @*<input type="reset" class="btn btn-default btn-xs" value="Clear Search" />*@
+        </div>
+    </div>
+}
+<br />
+<p>
+    <a href="@Url.Action("Create", "Technicians")" class="btn btn-default btn-xs">
+        Create Technician
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
+</p>
+
+<table id="technician" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(t => t.TechID)</th>
+            <th>@Html.DisplayNameFor(t => t.Name)</th>
+            <th>@Html.DisplayNameFor(t => t.Email)</th>
+            <th>@Html.DisplayNameFor(t => t.Phone)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tech in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(t => tech.TechID)</td>
+                <td>@Html.DisplayFor(t => tech.Name)</td>
+                <td>@Html.DisplayFor(t => tech.Email)</td>
+                <td>@Html.DisplayFor(t => tech.Phone)</td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = tech.TechID }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Edit Technician" })
+                    @*@Html.ActionLink("Details", "Details", new { id = customer.CustomerID }) |*@
+                    @Html.ActionLink(" ", "Delete", new { id = tech.TechID }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash", @title = "Delete Technician" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm">
+    </ul>
+</nav>
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalTechnicians = parseInt('@ViewBag.totalTechnicians');
+
+        var _HTMLPaging = [];
+        var i = 0;
+        var pages = parseInt(totalTechnicians / top);
+        if (totalTechnicians % top != 0) {
+            pages++;
+        }
+        for (i = 0; i < pages; i++) {
+
+            var activeClass = '';
+            if (page == (i + 1)) {
+                activeClass = 'active';
+            }
+
+            _HTMLPaging.push('<li class="page-item' + activeClass +'"><a class="page-link" href="/Technicians/Index?top=' + top + '&page=' + (i + 1).toString() + '">' + (i + 1).toString() + '</a ></li > ');
+        }
+        $(".pagination").html(_HTMLPaging.join(''));
+    });
+</script>

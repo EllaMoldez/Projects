@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Get In Touch";
+}
+<br />
+<link rel="stylesheet" href="~/Content/main.css" />
+
+<h2>@ViewBag.Title</h2>
+<h4>We'd love to hear from you!</h4>
+
+@*@if (ViewBag.Error != null)
+{
+    <h3> @ViewBag.Error </h3>
+}*@
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="container">
+            <form method="post" action="Contact">
+                <div class="container">
+                    <span class="form-control-static">Receiver</span>
+                    <input class="form-control" type="text" name="receiver" />
+                    <br />
+                    <span class="form-control-static">Subject</span>
+                    <input class="form-control" type="text" name="subject" />
+                    <br />
+                    <span class="form-control-static">Message</span>
+                    <input class="form-control" type="text" name="message" />
+                    <br />
+                    <input class="btn btn-primary" type="submit" value="Send Message" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<div id="address">
+    <address>
+        <strong>Tech Support</strong><br />
+        1234 Mountain Road, Moncton, NB E1C 8H9<br />
+        <abbr title="Phone"></abbr>
+        (506) 460-6222
+    </address>
+    <address>
+        <strong>Support:</strong>   <a href="mailto:Support@example.com">TechSupport@techSupport.com</a><br />
+        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@techSupport.com</a>
+    </address>
+</div>

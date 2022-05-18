@@ -1,0 +1,49 @@
+﻿@model DB_Programming_Class_III.Models.Technician
+
+@{
+    ViewBag.Title = "Edit Technician";
+}
+<br />
+<h2>Edit Technician Details</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(t => t.TechID)
+
+        <div class="form-group">
+            @Html.LabelFor(t => t.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(t => t.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(t => t.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(t => t.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(t => t.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(t => t.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(t => t.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(t => t.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(t => t.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}

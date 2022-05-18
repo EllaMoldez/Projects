@@ -1,0 +1,80 @@
+﻿@model DB_Programming_Class_III.Models.Incident
+
+@{
+    ViewBag.Title = "Create Incident";
+}
+<br />
+<h2>Create New Incident</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(i => i.CustomerID, "Customer Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CustomerID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(i => i.CustomerID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.ProductCode, "Product Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProductCode", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(i => i.ProductCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.TechID, "Tech Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TechID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(i => i.TechID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.DateOpened, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(i => i.DateOpened, new { htmlAttributes = new { @class = "form-control", type = "date", @Value = DateTime.Now.ToShortDateString() } })
+                @Html.ValidationMessageFor(i => i.DateOpened, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.DateClosed, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(i => i.DateClosed, new { htmlAttributes = new { @class = "form-control", type = "date", @Value = DateTime.Now.ToShortDateString() } })
+                @Html.ValidationMessageFor(i => i.DateClosed, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(i => i.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(i => i.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(i => i.Description, new { htmlAttributes = new { @class = "form-control", @row = 3 } })
+                @Html.ValidationMessageFor(i => i.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" />
+                @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+

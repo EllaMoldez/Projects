@@ -1,0 +1,28 @@
+﻿@model DB_Programming_Class_III.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+<br />
+<h2>Product Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(p => p.ProductCode)</dt>
+        <dd>@Html.DisplayFor(p => p.ProductCode)</dd>
+
+        <dt>@Html.DisplayNameFor(p => p.Name)</dt>
+        <dd>@Html.DisplayFor(p => p.Name)</dd>
+
+        <dt>@Html.DisplayNameFor(p => p.Version)</dt>
+        <dd>@Html.DisplayFor(p => p.Version)</dd>
+
+        <dt>@Html.DisplayNameFor(p => p.ReleaseDate)</dt>
+        <dd>@Html.DisplayFor(p => p.ReleaseDate)</dd>
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("Index",  "Home")" class="btn btn-default">Back To List</a>
+</p>
+

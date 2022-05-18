@@ -1,0 +1,107 @@
+﻿@model IEnumerable<DB_Programming_Class_III.Models.Product>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<link rel="stylesheet" href="~/Content/main.css" />
+
+<div class="row">
+    <div class="top-buffer col-md-12">
+        <h2>Products</h2>
+        <p>Total Products: @ViewBag.totalProducts</p>
+    </div>
+</div>
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <input type="text" placeholder="Search by Product Name or Code..." name="searchTerm" id="searchTerm" />
+            <input type="submit" class="btn btn-primary btn-xs" value="Search" />
+            <a href="@Url.Action("Index",  "Products")" class="btn btn-default btn-xs">Clear Search</a>
+        </div>
+    </div>
+}
+<br />
+<p>
+    <a href="@Url.Action("Create", "Products")" class="btn btn-default btn-xs">
+        Create Product
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
+</p>
+
+<table id="products" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(p => p.ProductCode)</th>
+            <th>@Html.DisplayNameFor(p => p.Name)</th>
+            <th>@Html.DisplayNameFor(p => p.Version)</th>
+            <th>@Html.DisplayNameFor(p => p.ReleaseDate)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(p => product.ProductCode)</td>
+                <td>@Html.DisplayFor(p => product.Name)</td>
+                <td>@Html.DisplayFor(p => product.Version)</td>
+                <td>@product.ReleaseDate.ToShortDateString()</td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = product.ProductCode.Trim() }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Edit Product" })
+                    @*@Html.ActionLink("Details", "Details", new { id = item.StateCode }) |*@
+                    @Html.ActionLink(" ", "Delete", new { id = product.ProductCode.Trim() }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash", @title = "Delete Product"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm">
+    </ul>
+</nav>
+
+@*
+    1. mark which page is Active
+    2. mark which button is disabled (previous/next)
+    3. determine how many pages we have in total
+*@
+
+@*<script>
+        window.addEventListener('load', function () {
+            var page = parseInt('@ViewBag.page');
+            var top = parseInt('@ViewBag.top');
+            var totalProducts = parseInt('@ViewBag.totalProducts');
+            var baseUrl = '/Products/Index';
+
+            createPaging(page, top, totalProducts, baseUrl);
+        });
+
+    </script>*@
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalProducts = parseInt('@ViewBag.totalProducts');
+
+        var _HTMLPaging = [];
+        var i = 0;
+        var pages = parseInt(totalProducts / top);
+        if (totalProducts % top != 0) {
+            pages++;
+        }
+        for (i = 0; i < pages; i++) {
+
+            var activeClass = '';
+            if (page == (i + 1)) {
+                activeClass = 'active';
+            }
+
+            _HTMLPaging.push('<li class="page-item' + activeClass +'"><a class="page-link" href="/Products/Index?top=' + top + '&page=' + (i + 1).toString() + '">' + (i + 1).toString() + '</a ></li > ');
+        }
+        $(".pagination").html(_HTMLPaging.join(''));
+    });
+</script>
